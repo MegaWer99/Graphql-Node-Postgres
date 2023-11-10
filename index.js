@@ -9,7 +9,7 @@ const empleados = [
 		apellidopaterno: "Narvaez",
 		apellidomaterno: "Werminski",
 		edad: "24",
-		fechanacimiento: "1999-09-13T05:00:00.000Z",
+		fechanacimiento: "1999-09-13",
 		telefono: "3124489453",
 		ciudad: "barranquilla"
 	},
@@ -19,7 +19,7 @@ const empleados = [
 		apellidopaterno: "Dominges",
 		apellidomaterno: "Mendoza",
 		edad: "18",
-		fechanacimiento: "2005-12-24T05:00:00.000Z",
+		fechanacimiento: "2005-12-24",
 		telefono: "312569589",
 		ciudad: "Cali"
 	},
@@ -29,7 +29,7 @@ const empleados = [
 		apellidopaterno: "Zuñiga",
 		apellidomaterno: "Hernandez",
 		edad: "20",
-		fechanacimiento: "2003-02-27T05:00:00.000Z",
+		fechanacimiento: "2003-02-27",
 		telefono: "1234567892",
 		ciudad: "Medellin"
 	}
@@ -50,6 +50,7 @@ type empleado{
 type Query{
 	EmpleadoCount: Int!
 	AllEmpleados: [empleado]!
+	FindEmpleados (nombre: String!): empleado
 }
 ` 
 
@@ -57,7 +58,11 @@ const resolvers = {
 
 	Query:{
 	EmpleadoCount: () => empleados.length,
-	AllEmpleados: () => empleados
+	AllEmpleados: () => empleados,
+	FindEmpleados: (root, args) => {
+		const {nombre} = args
+		return empleados.find(empleado => empleado.nombre == nombre)
+	}
 	}
 }
 
